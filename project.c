@@ -3,10 +3,42 @@
 
 /* ALU */
 /* 10 Points */
-void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
-{
+void ALU(unsigned A, unsigned B, char ALUControl, unsigned *ALUresult, char *Zero) {
+    switch (ALUControl) {
+        case 0: // Z = A + B
+            *ALUresult = A + B;
+            break;
+        case 1: // Z = A - B
+            *ALUresult = A - B;
+            break;
+        case 2: // Z = (A < B) ? 1 : 0 (signed comparison)
+            *ALUresult = ((int)A < (int)B) ? 1 : 0;
+            break;
+        case 3: // Z = (A < B) ? 1 : 0 (unsigned comparison)
+            *ALUresult = (A < B) ? 1 : 0;
+            break;
+        case 4: // Z = A & B
+            *ALUresult = A & B;
+            break;
+        case 5: // Z = A | B
+            *ALUresult = A | B;
+            break;
+        case 6: // Z = B << 16
+            *ALUresult = B << 16;
+            break;
+        case 7: // Z = ~A
+            *ALUresult = ~A;
+            break;
+        default:
+            // Handle undefined ALUControl values, though normally this should not happen
+            *ALUresult = 0;
+            break;
+    }
 
+    // Set Zero flag
+    *Zero = (*ALUresult == 0) ? 1 : 0;
 }
+
 
 /* instruction fetch */
 /* 10 Points */
